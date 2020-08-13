@@ -49,6 +49,19 @@ function showMillionaires() {
   updateDOM();
 }
 
+const updated = true;
+
+// Calculate users wealth
+function calculateWealth() {
+  const wealth = data.reduce((acc, user) => (acc += user.money), 0);
+  const wealthEl = document.createElement('div');
+  wealthEl.innerHTML = `<h3>Total Wealth: <strong>${formatMoney(
+    wealth
+  )}</strong>`;
+  main.appendChild(wealthEl);
+  calculateWealthBtn.disabled = true;
+}
+
 // Add new obj to data arr
 function addData(obj) {
   data.push(obj);
@@ -69,6 +82,8 @@ function updateDOM(providedData = data) {
     )}`;
     main.appendChild(element);
   });
+
+  calculateWealthBtn.disabled = false;
 }
 
 // Format number as money - https://stackoverflow.com/questions/149055/how-to-format-numbers-as-currency-string
@@ -82,3 +97,4 @@ addUserBtn.addEventListener('click', getRandomUser);
 doubleBtn.addEventListener('click', doubleMoney);
 sortBtn.addEventListener('click', sortByRichest);
 showMillionairesBtn.addEventListener('click', showMillionaires);
+calculateWealthBtn.addEventListener('click', calculateWealth);
